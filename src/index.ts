@@ -1,25 +1,27 @@
-import express, { Request, Response } from "express";
+import "reflect-metadata";
+import express from "express";
 import bodyParser from "body-parser";
-
+import { Routes } from "./routes/Routes";
+import { connectionDB } from "./constants/connectionDB";
 const PORT: number = Number(process.env.PORT) || 8080;
 const URL_GENERAL: string = process.env.URL_GENERAL || "http:127.0.0.1:";
-console.log("process.PORT", process.env.PORT);
 
 // create and setup express app
 async function main() {
-const app = express();
+  const app = express();
 
-app.use(bodyParser.urlencoded({ limit: "50mb", extended: true }));
-app.use(bodyParser.json({ limit: "50mb" }));
+  const connection = await connectionDB();
+  if (!connection) {
+    return;
+  }
+  app.use(bodyParser.urlencoded({ limit: "50mb", extended: true }));
+  app.use(bodyParser.json({ limit: "50mb" }));
 
-// register routes
-app.get("/", (req: Request, res: Response) => {
-  res.send("holi leimotiv");
-});
-
-// start express server
-app.listen(PORT);
-console.log(`server running on ${URL_GENERAL + PORT}`);
+  //Routes
+  Routes(app);
+  // start express server
+  app.listen(PORT);
+  console.log(`server running on ${URL_GENERAL + PORT}`);
 }
 
 main();
