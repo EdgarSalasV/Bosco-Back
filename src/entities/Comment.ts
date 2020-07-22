@@ -29,6 +29,6 @@ export class Comment extends BaseEntity {
 
   @Column()
   @IsDate()
-  updated_: Date;
+  updated_at?: Date;
 
 }

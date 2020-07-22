@@ -1,13 +1,15 @@
 import {Comment} from '../entities/Comment'
 
-export enum Message {
+export enum MessageEnum {
     ok = 'ok',
     error = 'error',
     warning = 'warning',
+    added = 'added',
+    noData = 'no data'
 }
 
-export interface iResult {
+export interface iResponse {
     code: number,
-    message: Message | string,
-    data: Comment[]
+    message: MessageEnum | string,
+    data: Comment[] | {}
 }

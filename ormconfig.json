@@ -6,6 +6,6 @@
   "password": "password",
   "database": "database_db",
   "entities": ["src/entities/**/*.js"],
-  "logging": true,
+  "logging": false,
   "synchronize": false
 }
