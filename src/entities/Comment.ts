@@ -1,6 +1,6 @@
 import { Entity, Column, PrimaryGeneratedColumn, BaseEntity } from "typeorm";
 import { Max, Min, Length, IsString, IsNumber, IsDate } from "class-validator";
-import { Status } from "../types/status";
+import { statusEntities } from "../types/statusEntities";
 
 @Entity()
 export class Comment extends BaseEntity {
@@ -16,10 +16,10 @@ export class Comment extends BaseEntity {
   @Max(4)
   @Min(1)
   @IsNumber()
-  status: Status;
+  status: statusEntities;
 
   @Column()
-  @Max(400)
+  @Length(10,400)
   @IsString()
   content: string;
 
@@ -28,7 +28,6 @@ export class Comment extends BaseEntity {
   created_at: Date;
 
   @Column()
-  @IsDate()
-  updated_at?: Date;
+  updated_at: Date;
 
 }

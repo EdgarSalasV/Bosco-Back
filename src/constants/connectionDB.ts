@@ -8,6 +8,7 @@ export const connectionDB = async () => {
     return connection;
   } catch (error) {
     const { code, errno, sqlMessage, sqlState } = error;
+    console.log('error', error)
     console.error(`Error in DB:
     code:${code}
     errno:${errno}

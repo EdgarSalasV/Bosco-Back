@@ -1,6 +1,6 @@
-export enum Status {
+export enum statusEntities {
   Active = 1,
   Inactive = 2,
   Suspended = 3,
-  Deleted = 4
+  Deleted = 4,
 }
