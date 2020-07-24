@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
 import { Comment } from "../../entities/Comment";
-import { currentTimestamp } from "../../constants/momentTimezone";
+import { currentTimestamp } from "../../utils/momentTimezone";
 import { iResponse, MessageEnum } from "../../types/responseExpress";
 import { catchErrorTypeOrm } from "../../utils/catchError";
 import { validate, ValidationError } from "class-validator";

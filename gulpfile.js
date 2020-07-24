@@ -35,8 +35,7 @@ gulp.task("transpile", () => {
 gulp.task("folders", () => {
   return gulp
     .src("*.*", { read: false })
-    .pipe(gulp.dest("lib/ftp"))
-    .pipe(gulp.dest("lib/csv"));
+    .pipe(gulp.dest("lib/files"));
   // .pipe(gulp.dest('lib/anotherNewFolder'))
 });
 //start

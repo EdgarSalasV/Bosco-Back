@@ -2,10 +2,19 @@ import { iResponse, MessageEnum } from "../../types/responseExpress";
 import { Comment } from "../../entities/Comment";
 import { Request, Response } from "express";
 import { catchErrorTypeOrm } from "../../utils/catchError";
+import logger from "../../utils/logger";
 
 export const getCommentList = async (req: Request, res: Response) => {
   let response: iResponse = { code: 0, message: "", data: [] };
   let commentList: Comment[] = [];
+
+  logger.log({
+    level: "info",
+    type: "CONTROLLER",
+    name: "getCommentList",
+    path: "comment/getCommentList",
+    message: "null"
+  });
 
   try {
     commentList = await Comment.find();

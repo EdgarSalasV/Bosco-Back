@@ -1,5 +1,6 @@
 import "reflect-metadata";
 import express from "express";
+import cors from "cors";
 import bodyParser from "body-parser";
 import { Routes } from "./routes/Routes";
 import { connectionDB } from "./constants/connectionDB";
@@ -9,6 +10,7 @@ const URL_GENERAL: string = process.env.URL_GENERAL || "http:127.0.0.1:";
 // create and setup express app
 async function main() {
   const app = express();
+  app.use(cors());
 
   const connection = await connectionDB();
   if (!connection) {
@@ -20,8 +22,9 @@ async function main() {
   //Routes
   Routes(app);
   // start express server
-  app.listen(PORT);
-  console.log(`server running on ${URL_GENERAL + PORT}`);
+  app.listen(PORT, () =>
+    console.log(`server running on ${URL_GENERAL + PORT}`)
+  );
 }
 
 main();
