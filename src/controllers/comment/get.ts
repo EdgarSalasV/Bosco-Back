@@ -2,30 +2,34 @@ import { iResponse, MessageEnum } from "../../types/responseExpress";
 import { Comment } from "../../entities/Comment";
 import { Request, Response } from "express";
 import { catchErrorTypeOrm } from "../../utils/catchError";
-import logger from "../../utils/logger";
+import { logger, logerTime } from "../../utils/logger";
+import { levelsWinston } from "../../types/winston";
+import { entity } from "../../types/entities";
 
 export const getCommentList = async (req: Request, res: Response) => {
   let response: iResponse = { code: 0, message: "", data: [] };
   let commentList: Comment[] = [];
 
+  const responseTime = logerTime.startTimer();
   logger.log({
-    level: "info",
-    type: "CONTROLLER",
+    level: levelsWinston.info,
+    message: "CONTROLLER",
+    entity: entity.comment,
     name: "getCommentList",
-    path: "comment/getCommentList",
-    message: "null"
   });
 
   try {
     commentList = await Comment.find();
     response = { code: 200, message: MessageEnum.ok, data: commentList };
   } catch (error) {
+    // catchErrorTypeOrm(error, entity.comment);
     catchErrorTypeOrm(error);
   }
 
   if (commentList.length === 0)
     response = { code: 200, message: MessageEnum.noData, data: [] };
 
+  responseTime.done({ entity: "comment", name: "getCommentList()" });
   res.send(response);
 };
 

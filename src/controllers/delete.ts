@@ -7,7 +7,6 @@ export const deleteEntityItem = (
   return new Promise((resolve: any, reject: any) => {
     try {
       let statusDelete = ENTITY.update(id, { status: statusEntities.Deleted });
-      console.log('statusDelete', statusDelete)
       resolve(statusDelete);
     } catch (error) {
       console.log('error', error)
