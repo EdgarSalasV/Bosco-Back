@@ -40,10 +40,6 @@ export const addComment = async (req: Request, res: Response) => {
 // FUNCTIONS
 
 const sendValidations = (errorList: ValidationError[]) => {
-  // for (const error of errorList) {
-  //   console.log("error", error.property);
-  //   console.log("error", error.constraints);
-  // }
   return errorList.map((error) => ({
     field: error.property,
     message: error.constraints,
