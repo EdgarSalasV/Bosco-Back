@@ -7,7 +7,7 @@ import { validate, ValidationError } from "class-validator";
 
 export const editComments = async (req: Request, res: Response) => {
   let response: iResponse = { code: 0, message: "", data: {} };
-  const { title, status, content } = req.body;
+  const { title, status, content, created_at } = req.body;
   const { id } = req.params;
 
   try {
@@ -15,7 +15,7 @@ export const editComments = async (req: Request, res: Response) => {
     updateComment.title = title;
     updateComment.status = status;
     updateComment.content = content;
-    // updateComment.created_at = currentTimestamp();
+    updateComment.created_at = new Date(created_at);
     updateComment.updated_at = currentTimestamp();
 
     const errors = await validate(updateComment);
