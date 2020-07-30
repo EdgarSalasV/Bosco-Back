@@ -1,12 +1,12 @@
 import { getCommentList, getCommentByID } from "./get";
 import { addComment } from "./post";
-import { editComments } from "./put";
-import { deleteComment } from "./delete";
+import { editComment } from "./put";
+import { deleteComments } from "./delete";
 
 export {
   getCommentList,
   getCommentByID,
   addComment,
-  editComments,
-  deleteComment,
+  editComment,
+  deleteComments,
 };

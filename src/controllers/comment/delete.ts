@@ -1,15 +1,29 @@
 import { Request, Response } from "express";
 import { iResponse, MessageEnum } from "../../types/responseExpress";
-import { catchErrorTypeOrm } from "../../utils/catchError";
+import { catchErrorReponse } from "../../utils/catchError";
 import { Comment } from "../../entities/Comment";
 import { statusEntities } from "../../types/statusEntities";
+import { loggerLevelEnum, loggerMessageEmum } from "../../types/logger";
+import { loggerTime } from "../../utils/logger/loggerTime";
+import { entityEnum } from "../../types/entities";
 
-export const deleteComment = async (req: Request, res: Response) => {
+const loggerBody = {
+  level: loggerLevelEnum.info,
+  message: loggerMessageEmum.controller,
+  entity: entityEnum.comment,
+  name: "",
+  description:"",
+  
+};
+
+export const deleteComments = async (req: Request, res: Response) => {
+  //logs
+  loggerTime.startTimer();
   const ids: string[] = req.body;
   let response: iResponse = { code: 0, message: "", data: [] };
 
   try {
-    const statusList = await deleteComments(ids);
+    const statusList = await removeComments(ids);
 
     const validatedComments = getValidComments(ids, statusList);
 
@@ -33,6 +47,7 @@ export const deleteComment = async (req: Request, res: Response) => {
         .filter((item) => !item.isDeleted)
         .map((i) => i.id);
 
+      loggerBody.level = loggerLevelEnum.warn;
       response = {
         code: 404,
         message: MessageEnum.noMatch,
@@ -40,14 +55,19 @@ export const deleteComment = async (req: Request, res: Response) => {
       };
     }
   } catch (error) {
-    catchErrorTypeOrm(error);
+    res.send(catchErrorReponse(error, loggerBody));
+    return;
   }
+
+  loggerBody.name = "deleteComments()";
+  loggerBody.entity = entityEnum.comment;
+  loggerTime.done(loggerBody);
   res.send(response);
 };
 
 // FUNCTIONS
 
-const deleteComments = async (ids: string[]): Promise<number[]> => {
+const removeComments = async (ids: string[]): Promise<number[]> => {
   let statusDelete: any;
   let result: number[] = [];
   for (const id of ids) {

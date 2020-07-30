@@ -1,5 +1,3 @@
-import { Comment } from "../entities/Comment";
-
 export enum MessageEnum {
   ok = "ok",
   error = "error",
@@ -14,5 +12,5 @@ export enum MessageEnum {
 export interface iResponse {
   code: number;
   message: MessageEnum | string;
-  data: Comment[] | {};
+  data: any[] | {};
 }

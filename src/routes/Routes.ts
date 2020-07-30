@@ -4,8 +4,8 @@ import {
   getCommentList,
   getCommentByID,
   addComment,
-  editComments,
-  deleteComment,
+  editComment,
+  deleteComments,
 } from "../controllers/comment";
 
 export const Routes = (app: Express) => {
@@ -22,10 +22,10 @@ export const Routes = (app: Express) => {
   app.post("/comment", addComment);
 
   // put
-  app.put("/comments/:id", editComments);
+  app.put("/comment/:id", editComment);
 
   // delete
-  app.delete("/comments", deleteComment);
+  app.delete("/comments", deleteComments);
 
   //#endregion COMMENTS
 };

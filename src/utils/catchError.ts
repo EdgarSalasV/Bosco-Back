@@ -1,8 +1,8 @@
-import { logger } from "./logger";
-import { levelsWinston } from "../types/winston";
+import { loggerTime } from "./logger/loggerTime";
+import { loggerLevelEnum, iLogger } from "../types/logger";
 
-// export const catchErrorTypeOrm = (error: any, entity: string) => {
-export const catchErrorTypeOrm = (error: any) => {
+export const catchErrorReponse = (error: any, body: iLogger) => {
+  const { message, entity, name } = body;
   const { code, errno, sqlMessage, sqlState, sql } = error;
   const errorStatus = {
     code,
@@ -11,13 +11,15 @@ export const catchErrorTypeOrm = (error: any) => {
     sqlState,
     sql,
   };
-  logger.error({
-    level: levelsWinston.info,
-    message: "CONTROLLER",
-    // entity,
-    entity: "asdas",
-    name: "getCommentList",
+
+  loggerTime.done({
+    level: loggerLevelEnum.error,
+    message,
+    entity,
+    name,
+    description: sqlMessage ? sqlMessage : error.message,
   });
+
   return {
     code: 400,
     errorMessage: errorStatus,
