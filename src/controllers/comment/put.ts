@@ -4,21 +4,10 @@ import { Comment } from "../../entities/Comment";
 import { catchErrorReponse } from "../../utils/catchError";
 import { currentTimestamp } from "../../utils/momentTimezone";
 import { validate, ValidationError } from "class-validator";
-import {
-  loggerLevelEnum,
-  loggerMessageEmum,
-  iLogger,
-} from "../../types/logger";
+import { loggerLevelEnum } from "../../types/logger";
 import { loggerTime } from "../../utils/logger/loggerTime";
 import { entityEnum } from "../../types/entities";
-
-const loggerBody: iLogger = {
-  level: loggerLevelEnum.info,
-  message: loggerMessageEmum.method,
-  entity: entityEnum.comment,
-  name: "",
-  description: "",
-};
+import { loggerTimeBody } from "../../types/topic";
 
 export const editComment = async (req: Request, res: Response) => {
   //logs
@@ -41,8 +30,8 @@ export const editComment = async (req: Request, res: Response) => {
     if (errors.length !== 0) {
       const validations = sendValidations(errors);
       response = { code: 400, message: MessageEnum.warning, data: validations };
-      loggerBody.level = loggerLevelEnum.warn;
-      loggerTime.done(loggerBody);
+      loggerTimeBody.level = loggerLevelEnum.warn;
+      loggerTime.done(loggerTimeBody);
       res.send(response);
       return;
     }
@@ -53,18 +42,18 @@ export const editComment = async (req: Request, res: Response) => {
       response.code = 201;
       response.message = MessageEnum.updated;
     } else {
-      loggerBody.level= loggerLevelEnum.warn;
+      loggerTimeBody.level = loggerLevelEnum.warn;
       response.code = 400;
       response.message = MessageEnum.noMatch;
     }
   } catch (error) {
-    res.send(catchErrorReponse(error, loggerBody));
+    res.send(catchErrorReponse(error, loggerTimeBody));
     return;
   }
 
-  loggerBody.name = "editComment()";
-  loggerBody.entity = entityEnum.comment;
-  loggerTime.done(loggerBody);
+  loggerTimeBody.name = "editComment()";
+  loggerTimeBody.entity = entityEnum.comment;
+  loggerTime.done(loggerTimeBody);
   res.send(response);
 };
 

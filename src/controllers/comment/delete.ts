@@ -3,18 +3,10 @@ import { iResponse, MessageEnum } from "../../types/responseExpress";
 import { catchErrorReponse } from "../../utils/catchError";
 import { Comment } from "../../entities/Comment";
 import { statusEntities } from "../../types/statusEntities";
-import { loggerLevelEnum, loggerMessageEmum } from "../../types/logger";
+import { loggerLevelEnum } from "../../types/logger";
 import { loggerTime } from "../../utils/logger/loggerTime";
 import { entityEnum } from "../../types/entities";
-
-const loggerBody = {
-  level: loggerLevelEnum.info,
-  message: loggerMessageEmum.controller,
-  entity: entityEnum.comment,
-  name: "",
-  description:"",
-  
-};
+import { loggerTimeBody } from "../../types/topic";
 
 export const deleteComments = async (req: Request, res: Response) => {
   //logs
@@ -47,7 +39,7 @@ export const deleteComments = async (req: Request, res: Response) => {
         .filter((item) => !item.isDeleted)
         .map((i) => i.id);
 
-      loggerBody.level = loggerLevelEnum.warn;
+      loggerTimeBody.level = loggerLevelEnum.warn;
       response = {
         code: 404,
         message: MessageEnum.noMatch,
@@ -55,13 +47,13 @@ export const deleteComments = async (req: Request, res: Response) => {
       };
     }
   } catch (error) {
-    res.send(catchErrorReponse(error, loggerBody));
+    res.send(catchErrorReponse(error, loggerTimeBody));
     return;
   }
 
-  loggerBody.name = "deleteComments()";
-  loggerBody.entity = entityEnum.comment;
-  loggerTime.done(loggerBody);
+  loggerTimeBody.name = "deleteComments()";
+  loggerTimeBody.entity = entityEnum.comment;
+  loggerTime.done(loggerTimeBody);
   res.send(response);
 };
 

@@ -3,16 +3,9 @@ import { Comment } from "../../entities/Comment";
 import { Request, Response } from "express";
 import { catchErrorReponse } from "../../utils/catchError";
 import { loggerTime } from "../../utils/logger/loggerTime";
-import { loggerLevelEnum, loggerMessageEmum } from "../../types/logger";
+import { loggerLevelEnum } from "../../types/logger";
 import { entityEnum } from "../../types/entities";
-
-const loggerBody = {
-  level: loggerLevelEnum.info,
-  message: loggerMessageEmum.controller,
-  entity: entityEnum.comment,
-  name: "",
-  description: "",
-};
+import { loggerTimeBody } from "../../types/topic";
 
 export const getCommentList = async (req: Request, res: Response) => {
   //logs
@@ -25,18 +18,18 @@ export const getCommentList = async (req: Request, res: Response) => {
     commentList = await Comment.find();
     response = { code: 200, message: MessageEnum.ok, data: commentList };
   } catch (error) {
-    res.send(catchErrorReponse(error, loggerBody));
+    res.send(catchErrorReponse(error, loggerTimeBody));
     return;
   }
 
   if (commentList.length === 0) {
-    loggerBody.level = loggerLevelEnum.warn;
+    loggerTimeBody.level = loggerLevelEnum.warn;
     response = { code: 400, message: MessageEnum.noData, data: [] };
   }
 
-  loggerBody.name = "getCommentList()";
-  loggerBody.entity = entityEnum.comment;
-  loggerTime.done(loggerBody);
+  loggerTimeBody.name = "getCommentList()";
+  loggerTimeBody.entity = entityEnum.comment;
+  loggerTime.done(loggerTimeBody);
   res.send(response);
 };
 
@@ -52,22 +45,22 @@ export const getCommentByID = async (req: Request, res: Response) => {
     comment = await Comment.findOne(id);
     response.code = 200;
   } catch (error) {
-    res.send(catchErrorReponse(error, loggerBody));
+    res.send(catchErrorReponse(error, loggerTimeBody));
   }
 
   if (typeof comment == "undefined") {
-    loggerBody.level = loggerLevelEnum.warn;
+    loggerTimeBody.level = loggerLevelEnum.warn;
     response.message = MessageEnum.noData;
     response.code = 400;
   } else {
-    loggerBody.level = loggerLevelEnum.info;
+    loggerTimeBody.level = loggerLevelEnum.info;
     response.message = MessageEnum.ok;
     response.data = comment;
   }
 
-  loggerBody.name = "getCommentByID()";
-  loggerBody.entity = entityEnum.comment;
-  loggerTime.done(loggerBody);
+  loggerTimeBody.name = "getCommentByID()";
+  loggerTimeBody.entity = entityEnum.comment;
+  loggerTime.done(loggerTimeBody);
 
   console.log("commentFINAL", comment);
   res.send(response);

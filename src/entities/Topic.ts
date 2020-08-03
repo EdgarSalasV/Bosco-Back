@@ -1,17 +1,9 @@
-import {
-  Entity,
-  Column,
-  PrimaryGeneratedColumn,
-  ManyToOne,
-  JoinColumn,
-  BaseEntity,
-} from "typeorm";
+import { Entity, Column, PrimaryGeneratedColumn, BaseEntity } from "typeorm";
 import { Max, Min, Length, IsString, IsNumber, IsDate } from "class-validator";
 import { statusEntities } from "../types/statusEntities";
-import { Topic } from "./Topic";
 
 @Entity()
-export class Comment extends BaseEntity {
+export class Topic extends BaseEntity {
   @PrimaryGeneratedColumn()
   id: number;
 
@@ -27,13 +19,9 @@ export class Comment extends BaseEntity {
   status: statusEntities;
 
   @Column()
-  @Length(10, 400)
+  @Length(10,6500)
   @IsString()
   content: string;
-
-  @ManyToOne((type) => Topic)
-  @JoinColumn({ name: "topic_id", referencedColumnName: "id" })
-  topic_id: Topic;
 
   @Column()
   @IsDate()
@@ -41,4 +29,5 @@ export class Comment extends BaseEntity {
 
   @Column()
   updated_at: Date;
+
 }

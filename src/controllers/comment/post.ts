@@ -4,21 +4,10 @@ import { currentTimestamp } from "../../utils/momentTimezone";
 import { iResponse, MessageEnum } from "../../types/responseExpress";
 import { catchErrorReponse } from "../../utils/catchError";
 import { validate, ValidationError } from "class-validator";
-import {
-  loggerLevelEnum,
-  loggerMessageEmum,
-  iLogger,
-} from "../../types/logger";
+import { loggerLevelEnum } from "../../types/logger";
 import { loggerTime } from "../../utils/logger/loggerTime";
 import { entityEnum } from "../../types/entities";
-
-const loggerBody: iLogger = {
-  level: loggerLevelEnum.info,
-  message: loggerMessageEmum.controller,
-  entity: entityEnum.comment,
-  name: "",
-  description: "",
-};
+import { loggerTimeBody } from "../../types/topic"; 
 
 export const addComment = async (req: Request, res: Response) => {
   //logs
@@ -52,7 +41,7 @@ export const addComment = async (req: Request, res: Response) => {
     response.code = 201;
     response.message = MessageEnum.added;
   } catch (error) {
-    res.send(catchErrorReponse(error, loggerBody));
+    res.send(catchErrorReponse(error, loggerTimeBody));
     return;
   }
 
@@ -69,8 +58,8 @@ const sendValidations = (errorList: ValidationError[]) => {
   }));
 };
 const loggerReponse = (level?: loggerLevelEnum) => {
-  if(level) loggerBody.level = level;
-  loggerBody.name = "addComment()";
-  loggerBody.entity = entityEnum.comment;
-  loggerTime.done(loggerBody);
+  if (level) loggerTimeBody.level = level;
+  loggerTimeBody.name = "addComment()";
+  loggerTimeBody.entity = entityEnum.comment;
+  loggerTime.done(loggerTimeBody);
 };

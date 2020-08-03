@@ -9,7 +9,8 @@ export const loggerTime = (() => {
       logTime = timeMs.startTimer();
     },
     done: (body: iLogger) => {
-      const { level, message, entity, name } = body;
+      const { level, type, entity, name } = body;
+      const message = type;
       logTime.done({
         level,
         message,

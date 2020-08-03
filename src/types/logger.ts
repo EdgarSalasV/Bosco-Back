@@ -8,8 +8,7 @@ export enum loggerLevelEnum {
   silly = "silly",
   files = "files",
 }
-//TODO INFO remember property "message" is the type of Action
-export enum loggerMessageEmum {
+export enum loggerTypeEmum {
   controller = "CONTROLLER",
   function = "FUNCTION",
   method = "METHOD",
@@ -22,10 +21,9 @@ export const colorLivels = {
   files: "green",
 };
 
-//TODO INFO remember property "message" is the type of Action
 export interface iLogger {
   level: loggerLevelEnum;
-  message: string;
+  type: loggerTypeEmum;
   entity: string;
   name: string;
   description?: string;
