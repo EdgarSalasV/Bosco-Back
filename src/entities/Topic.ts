@@ -70,4 +70,19 @@ export class Topic extends BaseEntity {
 
     return topicLits;
   };
+
+  getTopicByID = async (id: string) => {
+    const subCommentQuery = getRepository(Comment)
+      .createQueryBuilder("c")
+      .select("c.id, c.topic_id");
+    let topicID: any = getRepository(Topic)
+      .createQueryBuilder("t")
+      .select(`t.*, CONCAT('[',GROUP_CONCAT('"',tc.id,'"'),']')  AS Comments`)
+      .leftJoin(`(${subCommentQuery.getQuery()})`, "tc", "t.id = tc.topic_id")
+      .where(`t.id = '${id}'`)
+      .groupBy("t.id, tc.topic_id");
+      topicID = await topicID.getRawMany();
+
+    return topicID;
+  };
 }
