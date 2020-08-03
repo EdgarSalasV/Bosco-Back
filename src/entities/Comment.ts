@@ -5,6 +5,7 @@ import {
   ManyToOne,
   JoinColumn,
   BaseEntity,
+  getRepository,
 } from "typeorm";
 import { Max, Min, Length, IsString, IsNumber, IsDate } from "class-validator";
 import { statusEntities } from "../types/statusEntities";
