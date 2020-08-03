@@ -7,7 +7,10 @@ import {
   editComment,
   deleteComments,
 } from "../controllers/comment";
-import { getTopics, getTopic } from "../controllers/topic";
+import { 
+  getTopics, 
+  getTopic, 
+  deleteTopics } from "../controllers/topic";
 
 export const Routes = (app: Express) => {
   app.get("/", (req: Request, res: Response) => {
@@ -31,7 +34,11 @@ export const Routes = (app: Express) => {
   //#endregion COMMENTS
 
   //#region TOPICS
+  //get
   app.route("/topics").get(getTopics);
   app.route("/topic/:id").get(getTopic);
+
+  //delete
+  app.delete("/topics", deleteTopics)
   //#endregion TOPICS
 };
