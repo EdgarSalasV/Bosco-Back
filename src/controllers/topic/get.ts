@@ -13,8 +13,8 @@ export const getTopics = async (req: Request, res: Response) => {
   const response: iResponse = { code: 0, message: "", data: [] };
 
   try {
-    const topic = new Topic();
-    const topicList = await topic.getTopicList();
+    const topicList = await Topic.getTopicList();
+
     if (Array.isArray(topicList) && topicList.length > 0) {
       response.code = 200;
       response.message = MessageEnum.ok;
@@ -33,24 +33,21 @@ export const getTopics = async (req: Request, res: Response) => {
   res.send(response);
 };
 
-
-export const getTopic = async (req: Request, res: Response) => {
+export const getTopicByID = async (req: Request, res: Response) => {
   loggerTime.startTimer();
   loggerTimeBody.name = "getTopicByID";
 
-  const response: iResponse = {code: 0, message: "", data: {}}
-  const {id} = req.params;
+  const response: iResponse = { code: 0, message: "", data: {} };
+  const { id } = req.params;
 
   try {
-   const topic = new Topic();
-   const topicId =  await topic.getTopicByID(id)
+    const topicId = await Topic.getTopicByID(id);
 
-    if(Array.isArray(topicId) && topicId.length > 0){
+    if (Array.isArray(topicId) && topicId.length > 0) {
       response.code = 200;
       response.message = MessageEnum.ok;
-    response.data = topicId;
-
-    }else{
+      response.data = topicId;
+    } else {
       response.code = 404;
       response.message = MessageEnum.noMatch;
     }
@@ -61,4 +58,4 @@ export const getTopic = async (req: Request, res: Response) => {
 
   loggerTime.done(loggerTimeBody);
   res.send(response);
-}
+};

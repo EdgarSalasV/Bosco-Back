@@ -9,9 +9,10 @@ import {
 } from "../controllers/comment";
 import {
   getTopics,
-  getTopic,
-  addTopic
-} from "../controllers/topic";
+  getTopicByID,
+  editTopic,
+  deleteTopics,
+  addTopic } from "../controllers/topic";
 
 export const Routes = (app: Express) => {
   app.get("/", (req: Request, res: Response) => {
@@ -35,13 +36,17 @@ export const Routes = (app: Express) => {
   //#endregion COMMENTS
 
   //#region TOPICS
-
   //get
-  app.route("/topics").get(getTopics);
-  app.route("/topic/:id").get(getTopic);
+  app.route("/topics")
+  .get(getTopics)
+  .delete(deleteTopics);
+
+  app.route("/topic/:id")
+  .get(getTopicByID)
+  .put(editTopic);
 
   //post
   app.route("/topic").post(addTopic);
-  
+
   //#endregion TOPICS
 };
