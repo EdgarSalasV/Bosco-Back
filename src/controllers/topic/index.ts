@@ -1,4 +1,5 @@
 import { getTopics, getTopicByID } from "./get";
+import { deleteTopics } from "./delete";
 import { editTopic } from "./put";
 
 export {
@@ -6,5 +7,7 @@ export {
   getTopics,
   getTopicByID,
   //put
-  editTopic
+  editTopic,
+  //delete
+  deleteTopics
 };
