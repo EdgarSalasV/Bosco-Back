@@ -62,6 +62,5 @@ export const getCommentByID = async (req: Request, res: Response) => {
   loggerTimeBody.entity = entityEnum.comment;
   loggerTime.done(loggerTimeBody);
 
-  console.log("commentFINAL", comment);
   res.send(response);
 };

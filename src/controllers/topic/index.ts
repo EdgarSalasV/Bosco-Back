@@ -1,7 +1,10 @@
-import { getTopics, getTopic } from "./get";
+import { getTopics, getTopicByID } from "./get";
+import { editTopic } from "./put";
 
 export {
   //get
   getTopics,
-  getTopic
+  getTopicByID,
+  //put
+  editTopic
 };

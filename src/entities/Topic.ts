@@ -54,7 +54,7 @@ export class Topic extends BaseEntity {
   //   return topicLits;
   // };
 
-  getTopicList = async () => {
+  static getTopicList = async () => {
     const subCommentQuery = getRepository(Comment)
       .createQueryBuilder("c")
       .select("c.id, c.topic_id");
@@ -71,10 +71,11 @@ export class Topic extends BaseEntity {
     return topicLits;
   };
 
-  getTopicByID = async (id: string) => {
+  static getTopicByID = async (id: string) => {
     const subCommentQuery = getRepository(Comment)
       .createQueryBuilder("c")
       .select("c.id, c.topic_id");
+      
     let topicID: any = getRepository(Topic)
       .createQueryBuilder("t")
       .select(`t.*, CONCAT('[',GROUP_CONCAT('"',tc.id,'"'),']')  AS Comments`)
