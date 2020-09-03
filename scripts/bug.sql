@@ -8,20 +8,20 @@ SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0;
 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION';
 
 -- -----------------------------------------------------
--- Schema bitacora_db
+-- Schema bosco_bug
 -- -----------------------------------------------------
-DROP SCHEMA IF EXISTS `bitacora_db` ;
+DROP SCHEMA IF EXISTS `bosco_bug` ;
 
 -- -----------------------------------------------------
--- Schema bitacora_db
+-- Schema bosco_bug
 -- -----------------------------------------------------
-CREATE SCHEMA IF NOT EXISTS `bitacora_db` ;
-USE `bitacora_db` ;
+CREATE SCHEMA IF NOT EXISTS `bosco_bug` ;
+USE `bosco_bug` ;
 
 -- -----------------------------------------------------
--- Table `bitacora_db`.`topic`
+-- Table `bosco_bug`.`topic`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `bitacora_db`.`topic` (
+CREATE TABLE IF NOT EXISTS `bosco_bug`.`topic` (
   `id` CHAR(36) NOT NULL DEFAULT (UUID()),
   `title` VARCHAR(70) NOT NULL,
   `status` ENUM('active', 'inactive', 'suspended', 'deleted') NOT NULL,
@@ -33,9 +33,9 @@ ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `bitacora_db`.`programming_language`
+-- Table `bosco_bug`.`programming_language`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `bitacora_db`.`programming_language` (
+CREATE TABLE IF NOT EXISTS `bosco_bug`.`programming_language` (
   `id` CHAR(36) NOT NULL DEFAULT (UUID()),
   `title` VARCHAR(70) NOT NULL,
   `status` ENUM('active', 'inactive', 'suspended', 'deleted') NOT NULL,
@@ -46,9 +46,9 @@ ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `bitacora_db`.`topic_has_programming_language`
+-- Table `bosco_bug`.`topic_has_programming_language`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `bitacora_db`.`topic_has_programming_language` (
+CREATE TABLE IF NOT EXISTS `bosco_bug`.`topic_has_programming_language` (
   `topic_id` CHAR(36) NOT NULL DEFAULT (UUID()),
   `programming_language_id` CHAR(36) NOT NULL DEFAULT (UUID()),
   PRIMARY KEY (`topic_id`, `programming_language_id`),
@@ -56,21 +56,21 @@ CREATE TABLE IF NOT EXISTS `bitacora_db`.`topic_has_programming_language` (
   INDEX `fk_topic_has_programming_language_topic_idx` (`topic_id` ASC) VISIBLE,
   CONSTRAINT `fk_topic_has_programming_language_topic`
     FOREIGN KEY (`topic_id`)
-    REFERENCES `bitacora_db`.`topic` (`id`)
+    REFERENCES `bosco_bug`.`topic` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_topic_has_programming_language_programming_language1`
     FOREIGN KEY (`programming_language_id`)
-    REFERENCES `bitacora_db`.`programming_language` (`id`)
+    REFERENCES `bosco_bug`.`programming_language` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `bitacora_db`.`framework_library`
+-- Table `bosco_bug`.`framework_library`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `bitacora_db`.`framework_library` (
+CREATE TABLE IF NOT EXISTS `bosco_bug`.`framework_library` (
   `id` CHAR(36) NOT NULL DEFAULT (UUID()),
   `name` VARCHAR(15) NOT NULL,
   `status` ENUM('active', 'inactive', 'suspended', 'deleted') NOT NULL,
@@ -84,9 +84,9 @@ ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `bitacora_db`.`topic_has_framework_library`
+-- Table `bosco_bug`.`topic_has_framework_library`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `bitacora_db`.`topic_has_framework_library` (
+CREATE TABLE IF NOT EXISTS `bosco_bug`.`topic_has_framework_library` (
   `topic_id` CHAR(36) NOT NULL DEFAULT (UUID()),
   `framework_library_id` CHAR(36) NOT NULL DEFAULT (UUID()),
   PRIMARY KEY (`topic_id`, `framework_library_id`),
@@ -94,21 +94,21 @@ CREATE TABLE IF NOT EXISTS `bitacora_db`.`topic_has_framework_library` (
   INDEX `fk_topic_has_framework_library_topic1_idx` (`topic_id` ASC) VISIBLE,
   CONSTRAINT `fk_topic_has_framework_library_topic1`
     FOREIGN KEY (`topic_id`)
-    REFERENCES `bitacora_db`.`topic` (`id`)
+    REFERENCES `bosco_bug`.`topic` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_topic_has_framework_library_framework_library1`
     FOREIGN KEY (`framework_library_id`)
-    REFERENCES `bitacora_db`.`framework_library` (`id`)
+    REFERENCES `bosco_bug`.`framework_library` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `bitacora_db`.`comment`
+-- Table `bosco_bug`.`comment`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `bitacora_db`.`comment` (
+CREATE TABLE IF NOT EXISTS `bosco_bug`.`comment` (
   `id` CHAR(36) NOT NULL DEFAULT (UUID()),
   `title` VARCHAR(70) NOT NULL,
   `status` ENUM('active', 'inactive', 'suspended', 'deleted') NOT NULL,
@@ -120,16 +120,16 @@ CREATE TABLE IF NOT EXISTS `bitacora_db`.`comment` (
   INDEX `fk_comment_topic1_idx` (`topic_id` ASC) VISIBLE,
   CONSTRAINT `fk_comment_topic1`
     FOREIGN KEY (`topic_id`)
-    REFERENCES `bitacora_db`.`topic` (`id`)
+    REFERENCES `bosco_bug`.`topic` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `bitacora_db`.`third_library`
+-- Table `bosco_bug`.`third_library`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `bitacora_db`.`third_library` (
+CREATE TABLE IF NOT EXISTS `bosco_bug`.`third_library` (
   `id` CHAR(36) NOT NULL DEFAULT (UUID()),
   `name` VARCHAR(15) NOT NULL,
   `status` ENUM('active', 'inactive', 'suspended', 'deleted') NOT NULL,
@@ -141,9 +141,9 @@ ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `bitacora_db`.`topic_has_third_library`
+-- Table `bosco_bug`.`topic_has_third_library`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `bitacora_db`.`topic_has_third_library` (
+CREATE TABLE IF NOT EXISTS `bosco_bug`.`topic_has_third_library` (
   `topic_id` CHAR(36) NOT NULL DEFAULT (UUID()),
   `third_library_id` CHAR(36) NOT NULL DEFAULT (UUID()),
   PRIMARY KEY (`topic_id`, `third_library_id`),
@@ -151,21 +151,21 @@ CREATE TABLE IF NOT EXISTS `bitacora_db`.`topic_has_third_library` (
   INDEX `fk_topic_has_third_library_topic1_idx` (`topic_id` ASC) VISIBLE,
   CONSTRAINT `fk_topic_has_third_library_topic1`
     FOREIGN KEY (`topic_id`)
-    REFERENCES `bitacora_db`.`topic` (`id`)
+    REFERENCES `bosco_bug`.`topic` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_topic_has_third_library_third_library1`
     FOREIGN KEY (`third_library_id`)
-    REFERENCES `bitacora_db`.`third_library` (`id`)
+    REFERENCES `bosco_bug`.`third_library` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `bitacora_db`.`files`
+-- Table `bosco_bug`.`files`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `bitacora_db`.`files` (
+CREATE TABLE IF NOT EXISTS `bosco_bug`.`files` (
   `id` CHAR(36) NOT NULL DEFAULT (UUID()),
   `url` VARCHAR(100) NOT NULL,
   `status` ENUM('active', 'inactive', 'suspended', 'deleted') NOT NULL,
@@ -177,7 +177,7 @@ CREATE TABLE IF NOT EXISTS `bitacora_db`.`files` (
   INDEX `fk_files_topic1_idx` (`topic_id` ASC) VISIBLE,
   CONSTRAINT `fk_files_topic1`
     FOREIGN KEY (`topic_id`)
-    REFERENCES `bitacora_db`.`topic` (`id`)
+    REFERENCES `bosco_bug`.`topic` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
