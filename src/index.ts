@@ -2,7 +2,7 @@ import "reflect-metadata";
 import express from "express";
 import cors from "cors";
 import bodyParser from "body-parser";
-import { Routes } from "./routes/Routes";
+import { router as Routes } from "./routes/Routes";
 import { connectionDB } from "./constants/connectionDB";
 const PORT: number = Number(process.env.PORT) || 8080;
 const URL_GENERAL: string = process.env.URL_GENERAL || "http:127.0.0.1:";
@@ -16,12 +16,13 @@ async function main() {
   if (!connection) {
     return;
   }
+
   app.use(bodyParser.urlencoded({ limit: "50mb", extended: true }));
   app.use(bodyParser.json({ limit: "50mb" }));
 
-  //Routes
-  Routes(app);
-  // start express server
+  app.use("/bosco/issues", Routes);
+  // app.use("/bosco/clock", Routes);
+  
   app.listen(PORT, () =>
     console.log(`server running on ${URL_GENERAL + PORT}`)
   );

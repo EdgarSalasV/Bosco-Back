@@ -1,5 +1,5 @@
 // register routes
-import { Express, Request, Response } from "express";
+import { Router, Request, Response } from "express";
 import {
   getCommentList,
   getCommentByID,
@@ -12,41 +12,36 @@ import {
   getTopicByID,
   editTopic,
   deleteTopics,
-  addTopic } from "../controllers/topic";
+  addTopic,
+} from "../controllers/topic";
 
-export const Routes = (app: Express) => {
-  app.get("/", (req: Request, res: Response) => {
-    res.send({ hola: "holi leimotiv" });
-  });
+export const router: Router = Router();
 
-  //#region COMMENTS
-  // get
-  app.get("/comment/:id", getCommentByID);
-  app.get("/comments", getCommentList);
+router.get("/", (req: Request, res: Response) => {
+  res.send({ hola: "holi leimotiv" });
+});
 
-  // post
-  app.post("/comment", addComment);
+//#region COMMENTS
+// get
+router.get("/comment/:id", getCommentByID);
+router.get("/comments", getCommentList);
 
-  // put
-  app.put("/comment/:id", editComment);
+// post
+router.post("/comment", addComment);
 
-  // delete
-  app.delete("/comments", deleteComments);
+// put
+router.put("/comment/:id", editComment);
 
-  //#endregion COMMENTS
+// delete
+router.delete("/comments", deleteComments);
+//#endregion COMMENTS
 
-  //#region TOPICS
-  //get
-  app.route("/topics")
-  .get(getTopics)
-  .delete(deleteTopics);
+//#region TOPICS
+//get
+router.route("/topics").get(getTopics).delete(deleteTopics);
 
-  app.route("/topic/:id")
-  .get(getTopicByID)
-  .put(editTopic);
+router.route("/topic/:id").get(getTopicByID).put(editTopic);
 
-  //post
-  app.route("/topic").post(addTopic);
-
-  //#endregion TOPICS
-};
+//post
+router.route("/topic").post(addTopic);
+//#endregion TOPICS

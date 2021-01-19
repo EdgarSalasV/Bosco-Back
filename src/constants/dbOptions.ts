@@ -6,7 +6,7 @@ export const dbOptions = {
   port: 3306,
   username: "bainur",
   password: "password",
-  database: "bitacora_db",
+  database: "bosco_bitacora",
   entities: ["lib/entities/**/*.js"],
   logging: true,
   synchronize: false,
